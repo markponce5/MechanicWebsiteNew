@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="p-3 mb-2 bg-danger text-white text-center" >All Rapid Rebuildz Builds</h1><br>
+        <div class="webpage d-grid gap-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse p-2" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/dashboard">Home </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link" href="/create/inquire">Inquire</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-item nav-link" href="/builds">Other Builds<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link" href="/contact/us">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link " href="/create/build">Add your build</a>
+                    </li>
+                    </ul>
+                    <span class="nav-item">
+                        <a class="nav-item nav-link text-dark " href="/logout">Log Out</a>
+                    </span>
+                </div>
+            </nav>
+            <div class="d-flex justify-content-between">
+                <h2>All posted Projects</h2>
+                <div lass="d-flex justify-content-around" >
+            </div>
+            </div>
+            <div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name of Vehicle</th>
+                        <th>Amount Spent</th>
+                        <th>Posted By</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for build in all_builds %}
+                    <tr>
+                        <td>{{ build.name_of_vehicle}}</td>
+                        <td>{{ build.amount_spent}}</td>
+                        <td>{{ build.creator.first_name.split()| first | capitalize}} {{build.creator.last_name.split()| first | capitalize}}</td>
+                        <td>
+                        <a href="/view/{{build.id}}">View Vehicle </a>
+                            {% if session['user_id'] == build.creator.id %}
+                                <a href="/edit/{{build.id}}">Edit</a>
+                                <a href="/delete/{{build.id}}">Delete</a>
+                            {% endif %}
+                        </td>
+                        
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
